@@ -9,6 +9,15 @@ import subprocess
 from tabulate import tabulate
 import re
 import os
+import sys
+
+def resource_path(relative_path):
+    """Возвращает путь к ресурсу (работает и в exe, и при запуске из IDE)."""
+    try:
+        base_path = sys._MEIPASS  # временная папка, куда PyInstaller распаковывает содержимое
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 
 class SerialThread2(QThread):
     data_received = pyqtSignal(str)
@@ -163,31 +172,38 @@ class TerminalWindow2(QDialog):
         return re.sub(r'(\(\d+\))', r'\n\1', text)
 
     def compare_and_write_matches(self):
-        try:
-            dict_files = {
-                'di_sid_dicts.txt': 'di_sid.txt',
-                'di_mid_dicts.txt': 'di_mid.txt',
-                'ai_sid_dicts.txt': 'ai_sid.txt',
-                'ai_mid_dicts.txt': 'ai_mid.txt'
-            }
+        """Сравнивает данные из *_dicts.txt и *_sets.txt и записывает совпадения в log-файл."""
+        dict_files = {
+            'di_sid_dicts.txt': 'di_sid.txt',
+            'di_mid_dicts.txt': 'di_mid.txt',
+            'ai_sid_dicts.txt': 'ai_sid.txt',
+            'ai_mid_dicts.txt': 'ai_mid.txt'
+        }
 
-            dict_contents = {}
-            for dict_file in dict_files:
-                with open(dict_file, 'r', encoding='utf-8') as file:
-                    dict_contents[dict_file] = set(file.read().splitlines())
+        with open(self.log_file_path, 'w', encoding='utf-8') as log_file:
+            for dict_file, set_file in dict_files.items():
+                dict_path = resource_path(dict_file)
+                set_path = resource_path(set_file)
 
-            with open(self.log_file_path, 'r', encoding='utf-8') as log_file:
-                log_lines = set(log_file.read().splitlines())
+                if not os.path.exists(dict_path) or not os.path.exists(set_path):
+                    log_file.write(f"Файл {dict_file} или {set_file} не найден.\n")
+                    continue
 
-            for dict_file, output_file in dict_files.items():
-                matches = log_lines.intersection(dict_contents[dict_file])
-                if matches:
-                    sorted_matches = sorted(matches, key=lambda x: int(re.search(r'\((\d+)\)', x).group(1)))
-                    with open(output_file, 'w', encoding='utf-8') as file:
-                        for match in sorted_matches:
-                            file.write(match + '\n')
-        except Exception as e:
-            self.update_terminal(f"Error in compare_and_write_matches: {str(e)}")
+                with open(dict_path, 'r', encoding='utf-8') as file1, \
+                     open(set_path, 'r', encoding='utf-8') as file2:
+                    dict_lines = [line.strip() for line in file1.readlines()]
+                    set_lines = [line.strip() for line in file2.readlines()]
+
+                matches = set(dict_lines) & set(set_lines)
+                log_file.write(f"\n[{dict_file}] Совпадения: {len(matches)}\n")
+                for match in matches:
+                    log_file.write(f"  • {match}\n")
+
+
+
+
+        with open(self.log_file_path, 'r', encoding='utf-8') as log_file:
+            print(log_file.read())
 
     def request_commands(self):
         try:

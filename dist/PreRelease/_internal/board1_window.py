@@ -970,6 +970,7 @@ class Ui_Board1_window(object):
         corr10_action.triggered.connect(lambda: self.send_module_command("corrector type 10\r\n"
                                                                          "reset\r\n"
                                                                          "\r\n"))
+
         corr11_action.triggered.connect(lambda: self.send_module_command("corrector type 11\r\nreset"))
         corr12_action.triggered.connect(lambda: self.send_module_command("corrector type 12\r\nreset"))
         corr13_action.triggered.connect(lambda: self.send_module_command("corrector type 13\r\nreset"))
@@ -1717,4 +1718,5 @@ class Ui_Board1_window(object):
     def send_module_command(self, command):
         # Отправка команды в консоль
         self.terminal_widget.send_data(command)
+
 

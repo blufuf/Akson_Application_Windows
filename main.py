@@ -14,12 +14,31 @@ import time
 import os
 from datetime import datetime
 
+import os
+os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
+os.environ["QT_ENABLE_HIGHDPI_SCALING"] = "1"
+
+
+def resource_path(relative_path):
+    """Возвращает корректный путь к ресурсу (для exe и IDE)."""
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
 
 class Ui_MainWindow(object):
+
     def setupUi(self, MainWindow):
+
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
+        MainWindow.setFixedSize(800, 600)
         MainWindow.setStyleSheet("background-color: rgb(188, 188, 188);")
+
+        icon_path = resource_path("AksonICON.ico")
+        MainWindow.setWindowIcon(QtGui.QIcon(icon_path))
+
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.name_program = QtWidgets.QLabel(self.centralwidget)
@@ -34,7 +53,7 @@ class Ui_MainWindow(object):
         self.text_select_port = QtWidgets.QLabel(self.centralwidget)
         self.text_select_port.setGeometry(QtCore.QRect(0, 90, 801, 41))
         font = QtGui.QFont()
-        font.setPointSize(20)
+        font.setPointSize(18)
         self.text_select_port.setFont(font)
         self.text_select_port.setAlignment(QtCore.Qt.AlignCenter)
         self.text_select_port.setObjectName("text_select_port")
@@ -60,7 +79,7 @@ class Ui_MainWindow(object):
         self.text_select_baudrate = QtWidgets.QLabel(self.centralwidget)
         self.text_select_baudrate.setGeometry(QtCore.QRect(0, 200, 801, 41))
         font = QtGui.QFont()
-        font.setPointSize(20)
+        font.setPointSize(18)
         self.text_select_baudrate.setFont(font)
         self.text_select_baudrate.setAlignment(QtCore.Qt.AlignCenter)
         self.text_select_baudrate.setObjectName("text_select_baudrate")
@@ -246,9 +265,9 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "AKSON board management"))
-        self.name_program.setText(_translate("MainWindow", "AKSON board management"))
-        self.text_select_port.setText(_translate("MainWindow", "Выберите Com port"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Конфигуратор АКСОН"))
+        self.name_program.setText(_translate("MainWindow", "Конфигуратор АКСОН"))
+        self.text_select_port.setText(_translate("MainWindow", "Выберите порт"))
         self.text_select_baudrate.setText(_translate("MainWindow", "Выберите скорость порта"))
         self.board_1_akson_xl_ex.setText(_translate("MainWindow", "АКСОН XL EX\n"
                                                                   "(STM 32 L496)"))
@@ -268,6 +287,21 @@ class Ui_MainWindow(object):
         # self.board_8.setText(_translate("MainWindow", "АКСОН\n"
         #                                               "8"))
         self.btn_open_cube.setText(_translate("MainWindow", "Открыть CUBE"))
+
+        self.made_in_label = QtWidgets.QLabel(self.centralwidget)
+        self.made_in_label.setGeometry(QtCore.QRect(630, 550, 160, 40))  # положение в правом нижнем углу
+        self.made_in_label.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
+        pixmap = QtGui.QPixmap(resource_path("AksonIMG.png"))
+        pixmap = pixmap.scaled(64, 64, QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
+        self.flag_icon = QtWidgets.QLabel(self.centralwidget)
+        self.flag_icon.setPixmap(pixmap)
+        self.flag_icon.setGeometry(QtCore.QRect(605, 539, 64, 64))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        self.made_in_label.setFont(font)
+        self.made_in_label.setText("Сделано в России")
+
 
 class SerialApp(QtWidgets.QMainWindow):
     def __init__(self):

@@ -1,19 +1,30 @@
+import os
+import sys
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 import datetime
 import subprocess
 
+def resource_path(relative_path):
+    """Возвращает корректный путь к файлу (работает и в exe, и в IDE)."""
+    try:
+        base_path = sys._MEIPASS  # временная папка PyInstaller
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
 class Ui_Board2_window(object):
     def setupUi(self, Board2_window):
 
-
-
         Board2_window.setObjectName("Board2_window")
-        Board2_window.resize(1600, 900)
+        Board2_window.setFixedSize(1600, 910)
         Board2_window.setStyleSheet("background-color: rgb(168, 168, 168);")
+
+        icon_path = resource_path("AksonICON.ico")
+        Board2_window.setWindowIcon(QtGui.QIcon(icon_path))
+
         self.centralwidget = QtWidgets.QWidget(Board2_window)
         self.centralwidget.setObjectName("centralwidget")
-
-
 
         self.terminal_window = QtWidgets.QWidget(self.centralwidget)
         self.terminal_window.setGeometry(QtCore.QRect(870, 0, 730, 900))
@@ -22,7 +33,7 @@ class Ui_Board2_window(object):
         self.data_window = QtWidgets.QFrame(self.centralwidget)
         self.data_window.setGeometry(QtCore.QRect(20, 20, 710, 201))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.data_window.setStyleSheet("")
         self.data_window.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.data_window.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -31,7 +42,7 @@ class Ui_Board2_window(object):
         self.text_guid = QtWidgets.QPushButton(self.data_window)
         self.text_guid.setGeometry(QtCore.QRect(0, 0, 190, 38))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.text_guid.setFont(font)
         self.text_guid.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.text_guid.setObjectName("text_guid")
@@ -40,7 +51,7 @@ class Ui_Board2_window(object):
         self.line_guid = QtWidgets.QLineEdit(self.data_window)
         self.line_guid.setGeometry(QtCore.QRect(190, 0, 520, 38))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.line_guid.setFont(font)
         self.line_guid.setStyleSheet("background-color: rgb(0, 0, 0);\n"
                                      "color: rgb(255, 255, 255);")
@@ -51,7 +62,7 @@ class Ui_Board2_window(object):
         self.line_box_sets = QtWidgets.QLineEdit(self.data_window)
         self.line_box_sets.setGeometry(QtCore.QRect(190, 40, 520, 38))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.line_box_sets.setFont(font)
         self.line_box_sets.setStyleSheet("background-color: rgb(0, 0, 0);\n"
                                          "color: rgb(255, 255, 255);")
@@ -69,7 +80,7 @@ class Ui_Board2_window(object):
         self.btn_entermoduls = QtWidgets.QToolButton(self.btn_window)
         self.btn_entermoduls.setGeometry(QtCore.QRect(102, 40, 82, 70))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.btn_entermoduls.setFont(font)
         self.btn_entermoduls.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.btn_entermoduls.setPopupMode(QtWidgets.QToolButton.InstantPopup)
@@ -81,7 +92,7 @@ class Ui_Board2_window(object):
         self.btn_entermoduls_check = QtWidgets.QPushButton(self.btn_window)
         self.btn_entermoduls_check.setGeometry(QtCore.QRect(20, 40, 82, 70))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.btn_entermoduls_check.setFont(font)
         self.btn_entermoduls_check.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.btn_entermoduls_check.setObjectName("btn_entermoduls_check")
@@ -101,7 +112,7 @@ class Ui_Board2_window(object):
         self.btn_gprs_sett_check = QtWidgets.QPushButton(self.btn_window)
         self.btn_gprs_sett_check.setGeometry(QtCore.QRect(260, 40, 82, 70))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.btn_gprs_sett_check.setFont(font)
         self.btn_gprs_sett_check.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.btn_gprs_sett_check.setObjectName("btn_gprs_sett_check")
@@ -109,7 +120,7 @@ class Ui_Board2_window(object):
         self.alkc_line = QtWidgets.QLineEdit(self.btn_window)
         self.alkc_line.setGeometry(QtCore.QRect(184, 340, 246, 38))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.alkc_line.setFont(font)
         self.alkc_line.setStyleSheet("background-color: rgb(0, 0, 0);\n"
                                     "color: rgb(255, 255, 255);")
@@ -119,7 +130,7 @@ class Ui_Board2_window(object):
         self.model_line = QtWidgets.QLineEdit(self.btn_window)
         self.model_line.setGeometry(QtCore.QRect(184, 380, 246, 38))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.model_line.setFont(font)
         self.model_line.setStyleSheet("background-color: rgb(0, 0, 0);\n"
                                      "color: rgb(255, 255, 255);")
@@ -129,7 +140,7 @@ class Ui_Board2_window(object):
         self.date_line = QtWidgets.QLineEdit(self.btn_window)
         self.date_line.setGeometry(QtCore.QRect(184, 420, 246, 38))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.date_line.setFont(font)
         self.date_line.setStyleSheet("background-color: rgb(0, 0, 0);\n"
                                       "color: rgb(255, 255, 255);")
@@ -142,7 +153,7 @@ class Ui_Board2_window(object):
         self.limit_line = QtWidgets.QLineEdit(self.btn_window)
         self.limit_line.setGeometry(QtCore.QRect(184, 460, 246, 38))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.limit_line.setFont(font)
         self.limit_line.setStyleSheet("background-color: rgb(0, 0, 0);\n"
                                      "color: rgb(255, 255, 255);")
@@ -153,7 +164,7 @@ class Ui_Board2_window(object):
         self.btn_box_sets = QtWidgets.QPushButton(self.btn_window)
         self.btn_box_sets.setGeometry(QtCore.QRect(102, 340, 82, 160))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.btn_box_sets.setFont(font)
         self.btn_box_sets.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.btn_box_sets.setObjectName("btn_box_sets")
@@ -161,7 +172,7 @@ class Ui_Board2_window(object):
         self.btn_check_box_sets = QtWidgets.QPushButton(self.btn_window)
         self.btn_check_box_sets.setGeometry(QtCore.QRect(20, 340, 82, 160))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.btn_check_box_sets.setFont(font)
         self.btn_check_box_sets.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.btn_check_box_sets.setObjectName("btn_check_box_sets")
@@ -169,7 +180,7 @@ class Ui_Board2_window(object):
         self.btn_box_sets_clear = QtWidgets.QPushButton(self.btn_window)
         self.btn_box_sets_clear.setGeometry(QtCore.QRect(20, 500, 164, 50))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.btn_box_sets_clear.setFont(font)
         self.btn_box_sets_clear.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.btn_box_sets_clear.setObjectName("btn_box_sets_clear")
@@ -201,7 +212,7 @@ class Ui_Board2_window(object):
         self.btn_corrtype_check = QtWidgets.QPushButton(self.btn_window)
         self.btn_corrtype_check.setGeometry(QtCore.QRect(260, 140, 82, 140))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.btn_corrtype_check.setFont(font)
         self.btn_corrtype_check.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.btn_corrtype_check.setObjectName("btn_corrtype_check")
@@ -209,7 +220,7 @@ class Ui_Board2_window(object):
         self.btn_dev = QtWidgets.QToolButton(self.btn_window)
         self.btn_dev.setGeometry(QtCore.QRect(20, 140, 165, 70))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.btn_dev.setFont(font)
         self.btn_dev.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.btn_dev.setPopupMode(QtWidgets.QToolButton.InstantPopup)
@@ -221,7 +232,7 @@ class Ui_Board2_window(object):
         self.btn_portsets = QtWidgets.QToolButton(self.btn_window)
         self.btn_portsets.setGeometry(QtCore.QRect(102, 240, 82, 70))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.btn_portsets.setFont(font)
         self.btn_portsets.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.btn_portsets.setPopupMode(QtWidgets.QToolButton.InstantPopup)
@@ -233,7 +244,7 @@ class Ui_Board2_window(object):
         self.btn_portsets_check = QtWidgets.QPushButton(self.btn_window)
         self.btn_portsets_check.setGeometry(QtCore.QRect(20, 240, 82, 70))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.btn_portsets_check.setFont(font)
         self.btn_portsets_check.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.btn_portsets_check.setObjectName("btn_portsets_check")
@@ -241,7 +252,7 @@ class Ui_Board2_window(object):
         self.btn_datatime = QtWidgets.QPushButton(self.btn_window)
         self.btn_datatime.setGeometry(QtCore.QRect(660, 40, 82, 70))
         font = QtGui.QFont()
-        font.setPointSizeF(11.0)
+        font.setPointSizeF(10.0)
         self.btn_datatime.setFont(font)
         self.btn_datatime.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.btn_datatime.setObjectName("btn_datatime")
@@ -249,7 +260,7 @@ class Ui_Board2_window(object):
         self.btn_settime =QtWidgets.QPushButton(self.btn_window)
         self.btn_settime.setGeometry(QtCore.QRect(742, 40, 82, 70))
         font = QtGui.QFont()
-        font.setPointSizeF(11.0)
+        font.setPointSizeF(10.0)
         self.btn_settime.setFont(font)
         self.btn_settime.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.btn_settime.setObjectName("btn_settime")
@@ -257,7 +268,7 @@ class Ui_Board2_window(object):
         self.btn_update_guid = QtWidgets.QPushButton(self.centralwidget)
         self.btn_update_guid.setGeometry(QtCore.QRect(740, 20, 137, 81))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.btn_update_guid.setFont(font)
         self.btn_update_guid.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.btn_update_guid.setObjectName("btn_update_guid")
@@ -265,7 +276,7 @@ class Ui_Board2_window(object):
         self.btn_upload = QtWidgets.QPushButton(self.data_window)
         self.btn_upload.setGeometry(QtCore.QRect(0, 40, 190, 38))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.btn_upload.setFont(font)
         self.btn_upload.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.btn_upload.setObjectName("btn_upload")
@@ -290,7 +301,7 @@ class Ui_Board2_window(object):
         self.btn_reset = QtWidgets.QPushButton(self.centralwidget)
         self.btn_reset.setGeometry(QtCore.QRect(760, 840, 100, 40))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.btn_reset.setFont(font)
         self.btn_reset.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.btn_reset.setObjectName("btn_reset")
@@ -298,7 +309,7 @@ class Ui_Board2_window(object):
         self.btn_help = QtWidgets.QPushButton(self.centralwidget)
         self.btn_help.setGeometry(QtCore.QRect(640, 840, 100, 40))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.btn_help.setFont(font)
         self.btn_help.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.btn_help.setObjectName("btn_help")
@@ -306,7 +317,7 @@ class Ui_Board2_window(object):
         self.btn_ver = QtWidgets.QPushButton(self.centralwidget)
         self.btn_ver.setGeometry(QtCore.QRect(520, 840, 100, 40))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.btn_ver.setFont(font)
         self.btn_ver.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.btn_ver.setObjectName("btn_ver")
@@ -314,7 +325,7 @@ class Ui_Board2_window(object):
         self.btn_exit_cross = QtWidgets.QPushButton(self.centralwidget)
         self.btn_exit_cross.setGeometry(QtCore.QRect(400, 840, 100, 40))
         font = QtGui.QFont()
-        font.setPointSizeF(12.0)
+        font.setPointSizeF(10.0)
         self.btn_exit_cross.setFont(font)
         self.btn_exit_cross.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.btn_exit_cross.setObjectName("btn_exit_cross")
@@ -322,7 +333,7 @@ class Ui_Board2_window(object):
         self.btn_timesets_check = QtWidgets.QPushButton(self.btn_window)
         self.btn_timesets_check.setGeometry(QtCore.QRect(660, 140, 82, 70))
         font = QtGui.QFont()
-        font.setPointSizeF(11.0)
+        font.setPointSizeF(10.0)
         self.btn_timesets_check.setFont(font)
         self.btn_timesets_check.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.btn_timesets_check.setObjectName("btn_timesets_check")
@@ -330,7 +341,7 @@ class Ui_Board2_window(object):
         self.btn_timesets =QtWidgets.QPushButton(self.btn_window)
         self.btn_timesets.setGeometry(QtCore.QRect(742, 140, 82, 70))
         font = QtGui.QFont()
-        font.setPointSizeF(11.0)
+        font.setPointSizeF(10.0)
         self.btn_timesets.setFont(font)
         self.btn_timesets.setStyleSheet("background-color: rgb(217, 217, 217);")
         self.btn_timesets.setObjectName("btn_timesets")
@@ -1088,14 +1099,20 @@ class Ui_Board2_window(object):
         corr5_action2.triggered.connect(lambda: self.send_module_command("corrector baud 2400\r\n"))
         corr6_action2.triggered.connect(lambda: self.send_module_command("corrector baud 19200\r\n\r\n"
                                                                         "corrector init 19200\r\n\r\n"
-                                                                        "corrector work 19200\r\n\r\n"
-                                                                        "corrector consumer 00000000\r\n\r\n"
-                                                                        "corrector supplier 00000000\r\n\r\n"))
+                                                                        "corrector work 19200\r\n"
+                                                                         "\r\n"
+                                                                        "corrector consumer 00000000\r\n"
+                                                                         "\r\n"
+                                                                        "corrector supplier 00000000\r\n"
+                                                                         "\r\n"))
         corr7_action2.triggered.connect(lambda: self.send_module_command("corrector baud 19200\r\n\r\n"
                                                                         "corrector init 19200\r\n\r\n"
-                                                                        "corrector work 19200\r\n\r\n"
-                                                                        "corrector consumer 00000000\r\n\r\n"
-                                                                        "corrector supplier 00000000\r\n\r\n"))
+                                                                        "corrector work 19200\r\n"
+                                                                         "\r\n"
+                                                                        "corrector consumer 00000000\r\n"
+                                                                         "\r\n"
+                                                                        "corrector supplier 00000000\r\n"
+                                                                         "\r\n"))
         corr8_action2.triggered.connect(lambda: self.send_module_command("corrector baud 9600\r\n\r\n"
                                                                         "corrector init 9600\r\n\r\n"
                                                                         "corrector work 9600\r\n\r\n"))
@@ -1114,9 +1131,12 @@ class Ui_Board2_window(object):
                                                                          "corrector fullscan off\r\n\r\n"))
         corr16_action2.triggered.connect(lambda: self.send_module_command("corrector baud 19200\r\n\r\n"
                                                                         "corrector init 19200\r\n\r\n"
-                                                                        "corrector work 19200\r\n\r\n"
-                                                                        "corrector consumer 00000000\r\n\r\n"
-                                                                        "corrector supplier 00000000\r\n\r\n"))
+                                                                        "corrector work 19200\r\n"
+                                                                          "\r\n"
+                                                                        "corrector consumer 00000000\r\n"
+                                                                          "\r\n"
+                                                                        "corrector supplier 00000000\r\n"
+                                                                          "\r\n"))
         corr17_action2.triggered.connect(lambda: self.send_module_command(""))
         corr18_action2.triggered.connect(lambda: self.send_module_command(""))
         corr19_action2.triggered.connect(lambda: self.send_module_command(""))

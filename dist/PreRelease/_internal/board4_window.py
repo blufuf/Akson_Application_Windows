@@ -3,6 +3,15 @@ import datetime
 import subprocess
 import serial
 from PyQt5.QtCore import QTimer
+import sys, os
+
+def resource_path(relative_path):
+    """Возвращает корректный путь к файлу (работает и в exe, и в IDE)."""
+    try:
+        base_path = sys._MEIPASS  # временная папка PyInstaller
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 
 
 class Ui_board4_window(object):
@@ -696,7 +705,18 @@ class Ui_board4_window(object):
 
     def send_tablets_add(self):
         number = self.box_1wire_number.currentText()
-        self.terminal_widget.send_data(f"tablets add {number}")
+
+        menu = QtWidgets.QMenu(self.btn_tablets_add)
+
+        tablets_add_action1 = QtWidgets.QAction("tablets add", self.btn_tablets_add)
+        tablets_add_action1.triggered.connect(lambda: self.send_module_command(f"tablets add {number}"))
+        tablets_action1 = QtWidgets.QAction("tablets", self.btn_tablets_add)
+        tablets_action1.triggered.connect(lambda: self.send_module_command("tablets"))
+
+        menu.addAction(tablets_add_action1)
+        menu.addAction(tablets_action1)
+
+        menu.exec_(QtGui.QCursor.pos())
 
     def send_wire_temp_clear(self):
         self.terminal_widget.send_data("1wire_temp clear")
@@ -788,7 +808,7 @@ class Ui_board4_window(object):
     def load_items_from_file(self, filename):
         items = []
         try:
-            with open(filename, 'r', encoding='utf-8') as file:
+            with open(resource_path(filename), 'r', encoding='utf-8') as file:
                 items = [line.strip() for line in file.readlines()]
         except FileNotFoundError:
             print(f"File {filename} not found.")
@@ -942,10 +962,31 @@ class Ui_board4_window(object):
         self.terminal_widget.send_data(f'datetime {current_date_string}')
 
     def send_modems_sets_command(self):
-        self.terminal_widget.send_data('modems_sets')
+        menu = QtWidgets.QMenu(self.btn_entermoduls_check)
+
+        modemsets_action1 = QtWidgets.QAction("modems_sets", self.btn_entermoduls_check)
+        modemsets_action1.triggered.connect(lambda: self.send_module_command("modems_sets"))
+        modulessets_action1 = QtWidgets.QAction("modules_sets", self.btn_entermoduls_check)
+        modulessets_action1.triggered.connect(lambda: self.send_module_command("modules_sets"))
+
+        menu.addAction(modemsets_action1)
+        menu.addAction(modulessets_action1)
+
+        menu.exec_(QtGui.QCursor.pos())
 
     def send_btn_gprs_sett_check(self):
-        self.terminal_widget.send_data('gprs_sets all')
+
+        menu = QtWidgets.QMenu(self.btn_gprs_sett_check)
+
+        gprs_sets_all_action1 = QtWidgets.QAction("gprs_sets all", self.btn_gprs_sett_check)
+        gprs_sets_all_action1.triggered.connect(lambda: self.send_module_command("gprs_sets all"))
+        gprs_sets_action1 = QtWidgets.QAction("gprs_sets", self.btn_gprs_sett_check)
+        gprs_sets_action1.triggered.connect(lambda: self.send_module_command("gprs_sets"))
+
+        menu.addAction(gprs_sets_all_action1)
+        menu.addAction(gprs_sets_action1)
+
+        menu.exec_(QtGui.QCursor.pos())
 
     def send_datetime_command(self):
         self.terminal_widget.send_data('datetime')
@@ -961,6 +1002,8 @@ class Ui_board4_window(object):
         # Создание подменю для Module 1 и Module 2
         module1_menu = QtWidgets.QMenu("modems 1", self.btn_entermoduls)
         module2_menu = QtWidgets.QMenu("modems 2", self.btn_entermoduls)
+        module3_menu = QtWidgets.QMenu("modules 1", self.btn_entermoduls)
+        module4_menu = QtWidgets.QMenu("modules 2", self.btn_entermoduls)
 
         # Создание подменю для ON и OFF в каждом Module
         on_menu1 = QtWidgets.QMenu("ON", self.btn_entermoduls)
@@ -973,6 +1016,15 @@ class Ui_board4_window(object):
         off_action2.triggered.connect(lambda: self.send_module_command("modems_sets 2 off\r\n"
                                                                         "modems_sets"))
 
+        on_menu3 = QtWidgets.QMenu("ON", self.btn_entermoduls)
+        off_action3 = QtWidgets.QAction("OFF", self.btn_entermoduls)
+        off_action3.triggered.connect(lambda: self.send_module_command("modules_sets 1 off\r\n"
+                                                                       "modules_sets"))
+
+        on_menu4 = QtWidgets.QMenu("ON", self.btn_entermoduls)
+        off_action4 = QtWidgets.QAction("OFF", self.btn_entermoduls)
+        off_action4.triggered.connect(lambda: self.send_module_command("modules_sets 2 off\r\n"
+                                                                       "modules_sets"))
         # Добавление команд GPRS, CSD и ALL в подменю ON
         gprs_action1 = QtWidgets.QAction("GPRS", self.btn_entermoduls)
         csd_action1 = QtWidgets.QAction("CSD", self.btn_entermoduls)
@@ -1011,6 +1063,43 @@ class Ui_board4_window(object):
         on_menu2.addAction(csd_action2)
         on_menu2.addAction(all_action2)
 
+        gprs_action3 = QtWidgets.QAction("GPRS", self.btn_entermoduls)
+        csd_action3 = QtWidgets.QAction("CSD", self.btn_entermoduls)
+        all_action3 = QtWidgets.QAction("ALL", self.btn_entermoduls)
+
+        gprs_action3.triggered.connect(lambda: self.send_module_command("modules_sets 1 on\r\n"
+                                                                        "modules_sets 1 gprs\r\n"
+                                                                        "modules_sets"))
+
+        csd_action3.triggered.connect(lambda: self.send_module_command("modules_sets 1 on\r\n"
+                                                                        "modules_sets 1 csd\r\n"
+                                                                        "modules_sets"))
+        all_action3.triggered.connect(lambda: self.send_module_command("modules_sets 1 on\r\n"
+                                                                        "modules_sets 1 all\r\n"
+                                                                        "modules_sets"))
+        on_menu3.addAction(gprs_action3)
+        on_menu3.addAction(csd_action3)
+        on_menu3.addAction(all_action3)
+
+        gprs_action4 = QtWidgets.QAction("GPRS", self.btn_entermoduls)
+        csd_action4 = QtWidgets.QAction("CSD", self.btn_entermoduls)
+        all_action4 = QtWidgets.QAction("ALL", self.btn_entermoduls)
+
+        gprs_action4.triggered.connect(lambda: self.send_module_command("modules_sets 2 on\r\n"
+                                                                        "modules_sets 2 gprs\r\n"
+                                                                        "modules_sets"))
+
+        csd_action4.triggered.connect(lambda: self.send_module_command("modules_sets 2 on\r\n"
+                                                                        "modules_sets 2 csd\r\n"
+                                                                        "modules_sets"))
+        all_action4.triggered.connect(lambda: self.send_module_command("modules_sets 2 on\r\n"
+                                                                        "modules_sets 2 all\r\n"
+                                                                        "modules_sets"))
+
+        on_menu4.addAction(gprs_action4)
+        on_menu4.addAction(csd_action4)
+        on_menu4.addAction(all_action4)
+
         # Добавление подменю ON и OFF в Module 1 и Module 2
         module1_menu.addMenu(on_menu1)
         module1_menu.addAction(off_action1)
@@ -1018,9 +1107,17 @@ class Ui_board4_window(object):
         module2_menu.addMenu(on_menu2)
         module2_menu.addAction(off_action2)
 
+        module3_menu.addMenu(on_menu3)
+        module3_menu.addAction(off_action3)
+
+        module4_menu.addMenu(on_menu4)
+        module4_menu.addAction(off_action4)
+
         # Добавление Module 1 и Module 2 в основное меню
         menu.addMenu(module1_menu)
         menu.addMenu(module2_menu)
+        menu.addMenu(module3_menu)
+        menu.addMenu(module4_menu)
 
         # Отображение меню
         menu.exec_(QtGui.QCursor.pos())
@@ -1365,4 +1462,7 @@ class Ui_board4_window(object):
     def send_module_command(self, command):
         # Отправка команды в консоль
         self.terminal_widget.send_data(command)
+
+
+
 
