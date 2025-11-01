@@ -413,16 +413,40 @@ class SerialApp(QtWidgets.QMainWindow):
             self.board4_ui.terminal_widget = self.terminal_widget
             self.board4_window.show()
 
-
     def open_stm32cubeprogrammer(self):
-        stm32cubeprogrammer_path = "C:\\Program Files\\STMicroelectronics\\STM32Cube\\STM32CubeProgrammer\\bin\\STM32CubeProgrammer.exe"
-        stm32cubeprogrammer_dir = "C:\\Program Files\\STMicroelectronics\\STM32Cube\\STM32CubeProgrammer\\bin"
+        # Попробуем найти STM32CubeProgrammer в системе
+        possible_paths = [
+            r"C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin\STM32CubeProgrammer.exe",
+            r"C:\Program Files (x86)\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin\STM32CubeProgrammer.exe"
+        ]
+
+        stm32cubeprogrammer_path = None
+
+        for path in possible_paths:
+            if os.path.exists(path):
+                stm32cubeprogrammer_path = path
+                break
+
+        # Если не найдено — попробуем открыть через PATH
+        if stm32cubeprogrammer_path is None:
+            for path in os.environ["PATH"].split(";"):
+                exe_path = os.path.join(path, "STM32CubeProgrammer.exe")
+                if os.path.exists(exe_path):
+                    stm32cubeprogrammer_path = exe_path
+                    break
+
+        # Если всё ещё None — покажем ошибку
+        if stm32cubeprogrammer_path is None:
+            print("⚠️ STM32CubeProgrammer не найден. Проверьте установку.")
+            return
+
+        stm32cubeprogrammer_dir = os.path.dirname(stm32cubeprogrammer_path)
 
         try:
             self.close_port_connection()
             subprocess.Popen([stm32cubeprogrammer_path], cwd=stm32cubeprogrammer_dir)
-        except FileNotFoundError:
-            print("STM32CubeProgrammer не найден. Проверьте правильность пути.")
+        except Exception as e:
+            print(f"Ошибка при запуске STM32CubeProgrammer: {e}")
 
     def close_port_connection(self):
         if hasattr(self, 'serial_thread') and self.serial_thread.isRunning():

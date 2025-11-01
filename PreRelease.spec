@@ -6,8 +6,11 @@ a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[
-        ('C:/Program Files/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin/CubeProgrammer_Api.dll', '.'),
-        ('C:/Users/blufuf-pc/AppData/Local/Programs/Python/Python39/python39.dll', '.'),
+       # ('C:/Program Files/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin/CubeProgrammer_API.dll', '.'),
+      #  ('C:/Users/blufuf-pc/Desktop/api-ms-win-core-path-l1-1-0.dll', '.'),
+       # ('C:/Users/blufuf-pc/AppData/Local/Programs/Python/Python39/python39.dll', '.')
+        ('CubeProgrammer_Api.dll', '.'),
+        ('python39.dll', '.'),
     ],
     datas=[
         ('board1_window.py', '.'),

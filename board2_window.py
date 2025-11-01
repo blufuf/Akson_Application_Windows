@@ -4,7 +4,8 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 import datetime
 import subprocess
-
+os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
+os.environ["QT_ENABLE_HIGHDPI_SCALING"] = "1"
 def resource_path(relative_path):
     """Возвращает корректный путь к файлу (работает и в exe, и в IDE)."""
     try:
