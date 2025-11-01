@@ -47,7 +47,7 @@ exe = EXE(
     a.binaries,
     a.zipfiles,
     a.datas,
-    name='Конфигуратор АКСОН build_0.1.3.1.1',
+    name='Конфигуратор АКСОН build_0.1.3.1',
     debug=False,
     strip=False,
     upx=True,

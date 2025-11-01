@@ -197,17 +197,17 @@ class Ui_MainWindow(object):
         #                            "background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(132, 173, 169, 255), stop:1 rgba(255, 255, 255, 255));")
         # self.board_8.setObjectName("board_8")
 
-        self.btn_open_putty = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_open_putty.setGeometry(QtCore.QRect(590, 200, 130, 50))
+        self.btn_open_terminal = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_open_terminal.setGeometry(QtCore.QRect(590, 200, 130, 50))
         font = QtGui.QFont()
         font.setPointSize(10)
-        self.btn_open_putty.setFont(font)
-        self.btn_open_putty.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
-        self.btn_open_putty.setAutoFillBackground(False)
-        self.btn_open_putty.setStyleSheet("\n"
+        self.btn_open_terminal.setFont(font)
+        self.btn_open_terminal.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
+        self.btn_open_terminal.setAutoFillBackground(False)
+        self.btn_open_terminal.setStyleSheet("\n"
                                           "background-color: rgb(221, 221, 221);")
-        self.btn_open_putty.setObjectName("btn_open_putty")
-        self.btn_open_putty.setText("Открыть PuTTy")
+        self.btn_open_terminal.setObjectName("btn_open_terminal")
+        self.btn_open_terminal.setText("Открыть\nтерминал")
 
         # self.btn_exp = QtWidgets.QPushButton(self.centralwidget)
         # self.btn_exp.setGeometry(QtCore.QRect(120, 470, 150, 70))
@@ -323,18 +323,18 @@ class SerialApp(QtWidgets.QMainWindow):
         # self.ui.board_6.clicked.connect(lambda: self.open_board_interface("Board6"))
         # self.ui.board_7.clicked.connect(lambda: self.open_board_interface("Board7"))
         # self.ui.board_8.clicked.connect(lambda: self.open_board_interface("Board8"))
-        self.ui.btn_open_putty.clicked.connect(self.open_putty)
+        self.ui.btn_open_terminal.clicked.connect(self.open_terminal)
         # self.ui.btn_exp.clicked.connect(self.show_export_warning)
         # self.ui.btn_imp.clicked.connect(self.show_import_warning)
 
 
         self.refresh_ports()
 
-    def open_putty(self):
+    def open_terminal(self):
         selected_port = self.ui.port_box.currentText()
         selected_baudrate = self.ui.baudrate_box.currentText()
 
-        # путь к твоему бинарю Akson_terminal.exe (или ./putty_serial в Linux)
+        # путь к твоему бинарю Akson_terminal.exe (или ./terminal_serial в Linux)
         terminal_path = resource_path("Akson_terminal.exe")
 
         if not os.path.exists(terminal_path):
