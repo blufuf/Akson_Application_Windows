@@ -11,6 +11,7 @@ a = Analysis(
        # ('C:/Users/blufuf-pc/AppData/Local/Programs/Python/Python39/python39.dll', '.')
         ('CubeProgrammer_Api.dll', '.'),
         ('python39.dll', '.'),
+        ('Akson_terminal.exe', '.')
     ],
     datas=[
         ('board1_window.py', '.'),
@@ -29,6 +30,7 @@ a = Analysis(
         ('terminal.py', '.'),
         ('terminal2.py', '.'),
         ('AksonIMG.png', '.'),
+        ('AksonICON.ico', '.'),
     ],
     hiddenimports=['tabulate'],
     hookspath=[],
@@ -45,7 +47,7 @@ exe = EXE(
     a.binaries,
     a.zipfiles,
     a.datas,
-    name='Конфигуратор АКСОН build_0.1.3',
+    name='Конфигуратор АКСОН build_0.1.3.1.1',
     debug=False,
     strip=False,
     upx=True,

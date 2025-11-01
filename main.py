@@ -333,13 +333,23 @@ class SerialApp(QtWidgets.QMainWindow):
     def open_putty(self):
         selected_port = self.ui.port_box.currentText()
         selected_baudrate = self.ui.baudrate_box.currentText()
-        putty_path = "C:\\Program Files\\PuTTY\\putty.exe"  # Путь к PuTTY
+
+        # путь к твоему бинарю Akson_terminal.exe (или ./putty_serial в Linux)
+        terminal_path = resource_path("Akson_terminal.exe")
+
+        if not os.path.exists(terminal_path):
+            print("Не найден исполняемый файл терминала:", terminal_path)
+            return
 
         if selected_port and selected_baudrate:
             try:
-                subprocess.Popen([putty_path, "-serial", selected_port, "-sercfg", selected_baudrate])
-            except FileNotFoundError:
-                print("PuTTY не найден. Проверьте правильность пути.")
+                subprocess.Popen([
+                    terminal_path,
+                    "-port", selected_port,
+                    "-baud", selected_baudrate
+                ])
+            except Exception as e:
+                print(f"Ошибка при запуске терминала: {e}")
 
     def refresh_ports(self):
         ports = self.get_serial_ports()
