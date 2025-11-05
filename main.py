@@ -335,7 +335,7 @@ class SerialApp(QtWidgets.QMainWindow):
         selected_baudrate = self.ui.baudrate_box.currentText()
 
         # путь к твоему бинарю Akson_terminal.exe (или ./terminal_serial в Linux)
-        terminal_path = resource_path("Akson_terminal.exe")
+        terminal_path = resource_path("AksonTerminal.exe")
 
         if not os.path.exists(terminal_path):
             print("Не найден исполняемый файл терминала:", terminal_path)
