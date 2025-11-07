@@ -1,3 +1,10 @@
+import os, sys, ctypes
+
+ctypes.windll.user32.SetProcessDpiAwarenessContext(-4)  # Per-Monitor V2
+os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "0"
+os.environ["QT_ENABLE_HIGHDPI_SCALING"] = "0"
+os.environ["QT_SCALE_FACTOR"] = "1"
+os.environ["QT_SCREEN_SCALE_FACTORS"] = "1"
 import serial
 import serial.tools.list_ports
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QPlainTextEdit, QLineEdit, QApplication, QPushButton, \
@@ -86,7 +93,7 @@ class TerminalWindow2(QDialog):
         self.terminal_output.setWordWrapMode(0)
         font = self.terminal_output.font()
         font.setFamily("Courier")
-        font.setPointSize(9)
+        font.setPixelSize(14)
         self.terminal_output.setFont(font)
         self.terminal_output.setStyleSheet("background-color: rgb(0, 0, 0);\n"
                                            "color: rgb(255, 255, 255);")

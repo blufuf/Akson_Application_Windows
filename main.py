@@ -1,4 +1,9 @@
-import sys
+import os, sys, ctypes
+ctypes.windll.user32.SetProcessDpiAwarenessContext(-4)  # Per-Monitor V2
+os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "0"
+os.environ["QT_ENABLE_HIGHDPI_SCALING"] = "0"
+os.environ["QT_SCALE_FACTOR"] = "1"
+os.environ["QT_SCREEN_SCALE_FACTORS"] = "1"
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 import serial.tools.list_ports
@@ -14,9 +19,7 @@ import time
 import os
 from datetime import datetime
 
-import os
-os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
-os.environ["QT_ENABLE_HIGHDPI_SCALING"] = "1"
+
 
 
 def resource_path(relative_path):
@@ -44,7 +47,7 @@ class Ui_MainWindow(object):
         self.name_program = QtWidgets.QLabel(self.centralwidget)
         self.name_program.setGeometry(QtCore.QRect(0, 20, 801, 40))
         font = QtGui.QFont()
-        font.setPointSize(24)
+        font.setPixelSize(36)
         font.setItalic(False)
         font.setStrikeOut(False)
         self.name_program.setFont(font)
@@ -53,7 +56,7 @@ class Ui_MainWindow(object):
         self.text_select_port = QtWidgets.QLabel(self.centralwidget)
         self.text_select_port.setGeometry(QtCore.QRect(0, 90, 801, 41))
         font = QtGui.QFont()
-        font.setPointSize(18)
+        font.setPixelSize(28)
         self.text_select_port.setFont(font)
         self.text_select_port.setAlignment(QtCore.Qt.AlignCenter)
         self.text_select_port.setObjectName("text_select_port")
@@ -70,7 +73,7 @@ class Ui_MainWindow(object):
         self.port_box = QtWidgets.QComboBox(self.centralwidget)
         self.port_box.setGeometry(QtCore.QRect(240, 140, 321, 31))
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPixelSize(18)
         self.port_box.setFont(font)
         self.port_box.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.port_box.setAutoFillBackground(False)
@@ -79,14 +82,14 @@ class Ui_MainWindow(object):
         self.text_select_baudrate = QtWidgets.QLabel(self.centralwidget)
         self.text_select_baudrate.setGeometry(QtCore.QRect(0, 200, 801, 41))
         font = QtGui.QFont()
-        font.setPointSize(18)
+        font.setPixelSize(28)
         self.text_select_baudrate.setFont(font)
         self.text_select_baudrate.setAlignment(QtCore.Qt.AlignCenter)
         self.text_select_baudrate.setObjectName("text_select_baudrate")
         self.baudrate_box = QtWidgets.QComboBox(self.centralwidget)
         self.baudrate_box.setGeometry(QtCore.QRect(240, 270, 321, 31))
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPixelSize(18)
         self.baudrate_box.setFont(font)
         self.baudrate_box.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.baudrate_box.setAutoFillBackground(False)
@@ -96,7 +99,7 @@ class Ui_MainWindow(object):
         self.btn_open_cube = QtWidgets.QPushButton(self.centralwidget)
         self.btn_open_cube.setGeometry(QtCore.QRect(50, 200, 130, 50))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPixelSize(14)
         self.btn_open_cube.setFont(font)
         self.btn_open_cube.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.btn_open_cube.setAutoFillBackground(False)
@@ -107,7 +110,7 @@ class Ui_MainWindow(object):
         self.board_1_akson_xl_ex = QtWidgets.QPushButton(self.centralwidget)
         self.board_1_akson_xl_ex.setGeometry(QtCore.QRect(30, 360, 150, 70))
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPixelSize(16)
         font.setKerning(True)
         font.setStyleStrategy(QtGui.QFont.PreferDefault)
         self.board_1_akson_xl_ex.setFont(font)
@@ -121,7 +124,7 @@ class Ui_MainWindow(object):
         self.board_2_akson_xl_ex = QtWidgets.QPushButton(self.centralwidget)
         self.board_2_akson_xl_ex.setGeometry(QtCore.QRect(220, 360, 150, 70))
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPixelSize(16)
         self.board_2_akson_xl_ex.setFont(font)
         self.board_2_akson_xl_ex.setStyleSheet("background-color: rgb(226, 226, 226);\n"
                                     "border-color: rgb(195, 195, 195);\n"
@@ -131,7 +134,7 @@ class Ui_MainWindow(object):
         # self.board_5 = QtWidgets.QPushButton(self.centralwidget)
         # self.board_5.setGeometry(QtCore.QRect(30, 480, 150, 70))
         # font = QtGui.QFont()
-        # font.setPointSize(12)
+        # font.setPixelSize(12)
         # self.board_5.setFont(font)
         # self.board_5.setStyleSheet("background-color: rgb(226, 226, 226);\n"
         #                            "border-color: rgb(195, 195, 195);\n"
@@ -141,7 +144,7 @@ class Ui_MainWindow(object):
         # self.board_6 = QtWidgets.QPushButton(self.centralwidget)
         # self.board_6.setGeometry(QtCore.QRect(220, 480, 150, 70))
         # font = QtGui.QFont()
-        # font.setPointSize(12)
+        # font.setPixelSize(12)
         # self.board_6.setFont(font)
         # self.board_6.setStyleSheet("background-color: rgb(226, 226, 226);\n"
         #                            "border-color: rgb(195, 195, 195);\n"
@@ -151,7 +154,7 @@ class Ui_MainWindow(object):
         self.board_3_akson_xl = QtWidgets.QPushButton(self.centralwidget)
         self.board_3_akson_xl.setGeometry(QtCore.QRect(430, 360, 150, 70))
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPixelSize(16)
         self.board_3_akson_xl.setFont(font)
         self.board_3_akson_xl.setStyleSheet("background-color: rgb(226, 226, 226);\n"
                                    "border-color: rgb(195, 195, 195);\n"
@@ -161,7 +164,7 @@ class Ui_MainWindow(object):
         self.board_4_akson_1v1F = QtWidgets.QPushButton(self.centralwidget)
         self.board_4_akson_1v1F.setGeometry(QtCore.QRect(620, 360, 150, 70))
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPixelSize(16)
         self.board_4_akson_1v1F.setFont(font)
         self.board_4_akson_1v1F.setStyleSheet("background-color: rgb(226, 226, 226);\n"
                                    "border-color: rgb(195, 195, 195);\n"
@@ -171,7 +174,7 @@ class Ui_MainWindow(object):
         self.btn_refresh_ports = QtWidgets.QPushButton(self.centralwidget)
         self.btn_refresh_ports.setGeometry(QtCore.QRect(590, 140, 130, 31))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPixelSize(14)
         self.btn_refresh_ports.setFont(font)
         self.btn_refresh_ports.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.btn_refresh_ports.setAutoFillBackground(False)
@@ -181,7 +184,7 @@ class Ui_MainWindow(object):
         # self.board_7 = QtWidgets.QPushButton(self.centralwidget)
         # self.board_7.setGeometry(QtCore.QRect(430, 480, 150, 70))
         # font = QtGui.QFont()
-        # font.setPointSize(12)
+        # font.setPixelSize(12)
         # self.board_7.setFont(font)
         # self.board_7.setStyleSheet("background-color: rgb(226, 226, 226);\n"
         #                            "border-color: rgb(195, 195, 195);\n"
@@ -190,7 +193,7 @@ class Ui_MainWindow(object):
         # self.board_8 = QtWidgets.QPushButton(self.centralwidget)
         # self.board_8.setGeometry(QtCore.QRect(620, 480, 150, 70))
         # font = QtGui.QFont()
-        # font.setPointSize(12)
+        # font.setPixelSize(12)
         # self.board_8.setFont(font)
         # self.board_8.setStyleSheet("background-color: rgb(226, 226, 226);\n"
         #                            "border-color: rgb(195, 195, 195);\n"
@@ -200,7 +203,7 @@ class Ui_MainWindow(object):
         self.btn_open_terminal = QtWidgets.QPushButton(self.centralwidget)
         self.btn_open_terminal.setGeometry(QtCore.QRect(590, 200, 130, 50))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPixelSize(14)
         self.btn_open_terminal.setFont(font)
         self.btn_open_terminal.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.btn_open_terminal.setAutoFillBackground(False)
@@ -212,7 +215,7 @@ class Ui_MainWindow(object):
         # self.btn_exp = QtWidgets.QPushButton(self.centralwidget)
         # self.btn_exp.setGeometry(QtCore.QRect(120, 470, 150, 70))
         # font = QtGui.QFont()
-        # font.setPointSize(12)
+        # font.setPixelSize(12)
         # self.btn_exp.setFont(font)
         # self.btn_exp.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         # self.btn_exp.setAutoFillBackground(False)
@@ -224,7 +227,7 @@ class Ui_MainWindow(object):
         # self.btn_imp = QtWidgets.QPushButton(self.centralwidget)
         # self.btn_imp.setGeometry(QtCore.QRect(530, 470, 150, 70))
         # font = QtGui.QFont()
-        # font.setPointSize(12)
+        # font.setPixelSize(12)
         # self.btn_imp.setFont(font)
         # self.btn_imp.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         # self.btn_imp.setAutoFillBackground(False)
@@ -236,7 +239,7 @@ class Ui_MainWindow(object):
         # self.line_exp = QtWidgets.QLineEdit(self.centralwidget)
         # self.line_exp.setGeometry(QtCore.QRect(50, 550, 280, 30))
         # font = QtGui.QFont()
-        # font.setPointSizeF(12.0)
+        # font.setPixelSizeF(12.0)
         # self.line_exp.setFont(font)
         # self.line_exp.setStyleSheet("background-color: rgb(221, 221, 221);")
         # self.line_exp.setText("")
@@ -246,7 +249,7 @@ class Ui_MainWindow(object):
         # self.line_imp = QtWidgets.QLineEdit(self.centralwidget)
         # self.line_imp.setGeometry(QtCore.QRect(460, 550, 280, 30))
         # font = QtGui.QFont()
-        # font.setPointSizeF(12.0)
+        # font.setPixelSizeF(12.0)
         # self.line_imp.setFont(font)
         # self.line_imp.setStyleSheet("background-color: rgb(221, 221, 221);")
         # self.line_imp.setText("")
@@ -297,7 +300,7 @@ class Ui_MainWindow(object):
         self.flag_icon.setPixmap(pixmap)
         self.flag_icon.setGeometry(QtCore.QRect(605, 539, 64, 64))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPixelSize(13)
         font.setBold(True)
         self.made_in_label.setFont(font)
         self.made_in_label.setText("Сделано в России")
